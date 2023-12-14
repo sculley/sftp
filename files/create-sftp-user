@@ -67,7 +67,7 @@ fi
 
 useradd "${useraddOptions[@]}" "$user"
 mkdir -p "/home/$user"
-chown root:root "/home/$user"
+chown "$uid:$gid" "/home/$user"
 chmod 755 "/home/$user"
 
 # Retrieving user id to use it in chown commands instead of the user name
@@ -77,7 +77,7 @@ uid="$(id -u "$user")"
 if [ -n "$pass" ]; then
     echo "$user:$pass" | chpasswd $chpasswdOptions
 else
-    usermod -p "*" "$user" # disabled password
+    usermod --shell /bin/bash -p "*" "$user" # disabled password
 fi
 
 # Add SSH keys to authorized_keys with valid permissions
