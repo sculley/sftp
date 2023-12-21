@@ -91,6 +91,8 @@ if [ -d /etc/sftp.d ]; then
 fi
 
 if $startSshd; then
+    sed -i 's/{PORT}/'$PORT'/g' /etc/ssh/sshd_config
+
     log "Executing sshd"
     exec /usr/sbin/sshd -D -e
 else
